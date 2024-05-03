@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Onigashima</title>
+<link rel="stylesheet" href="homepage.css">
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: wheat;
+    }
+    header {
+        text-align: center;
+        padding: 10px;
+    }
+    .container {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px;
+    }
+    .product {
+        border: 1px solid ;
+        border-radius: 5px;
+        padding: 10px;
+        margin-top: 30px;
+        position: relative;
+        justify-content: center;
+        text-align: center;
+        left: 200px;
+        width: 300px;
+        float: left;
+        margin-left:100px;
+        background-color: white;
+        width: fit-content;
+        top: -100px;
+    }
+    .product:hover {
+transform: translateY(-10px);
+    }
+    .product img{
+     max-width: 180px;
+     text-align: center;
+    }
+    
+   
+    .receipt {
+        border: 1px solid;
+        border-radius: 5px;
+        padding: 30px;
+        margin-top:-69px;
+        margin-right: -15px;
+        background-color: whitesmoke;
+    }
+    .receipt-item {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 5px;
+    }
+    .cancel-btn {
+        background-color: lightcoral;
+        color: #fff;
+        border: none;
+        padding: 5px 10px;
+        cursor: pointer;
+    }
+    .checkout-btn {
+        background-color: lightcoral;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        cursor: pointer;
+    }
+    
+    #cart img{
+        position: relative;
+        left: 538px;
+        bottom: -37px;
+    }
+    #cart img:hover{
+     transform: translateY(-10px);
+    }
+    #cart-count{
+        position: relative;
+        left: 538px;
+        bottom: -37px;
+        font-size: 30px;
+       color: lightcoral;
+   
+    }
+    .logo{
+        position: relative;
+        border: 1px solid lightcoral;
+        border-radius: 50%;
+        height: 100px;
+        width: 100px;
+        left: -700px;
+        top: -260px;
+    }
+    #logout{
+            font-size:15px;
+            
+        }
+       
+</style>
+</head>
+<body>
+    <div class="sidebar">
+        <a href="homepage.html" onclick="home()">Home</a>
+        <a  href="product.html">Products</a>
+        <a  href="payment.html">Payment Settings</a>
+        <a href="contact.html">Contacts</a>
+        <hr>
+        <a id="about-link" href="about.html">About</a>
+        <button id="logout">Logout</button>
+      
+      </div>
+   
+<header>
+   
+    <h1 style="font-family: Georgia, 'Times New Roman', Times, serif; margin-top: 10px; position: relative; top: 30px; left: 10px;">Baratie's Food And Drinks Selection</h1>
+    <br><br>
+    <hr>
+    <div id="cart">
+        <img src="cart.png" style="height: 30px;">
+         <span id="cart-count" style="font-weight: bold;">0</span>
+    </div>
+</header>
+
+<h4 style="position: relative; left: 220px; border: 1px solid; border-radius: 10px; padding: 10px; 
+background-color: whitesmoke; width: fit-content; top: -55px; ">Food And Drinks Selection</h4>
+<div class="container">
+    <div class="products">
+        <div class="product">
+            <img src="food1.jpg" alt="Product 1">
+            <h2>Pork Cutlet  <br></h2>
+            <p>$18.00</p>
+            <button onclick="addToCart('Pork Cutlet', 18)">Add to Cart</button>
+        </div>
+        <div class="product">
+            <img src="food2.jpg" alt="Product 2">
+            <h2>Ramen   <br></h2>
+            <p>$20.00</p>
+            <button onclick="addToCart('Ramen', 20)">Add to Cart</button>
+        </div>
+        <div class="product">
+            <img src="food5.jpg" alt="Product 3">
+            <h2>Chicken Cutlet   <br></h2>
+            <p>$16.00</p>
+            <button onclick="addToCart('Chicken Cutlet', 16)">Add to Cart</button>
+        </div>
+        <div class="product">
+            <img src="drinks2.jpg" alt="Product 4">
+            <h2>Soda</h2>
+            <p>$13.00</p>
+            <button onclick="addToCart('Soda', 13)">Add to Cart</button>
+        </div>
+        <div class="product">
+            <img src="drinks3.jpg" alt="Product 5">
+            <h2>Milkshake</h2>
+            <p>$15.00</p>
+            <button onclick="addToCart('Milkshake', 15)">Add to Cart</button>
+        </div>
+        <div class="product">
+            <img src="drinks4.jpg" alt="Product 6">
+            <h2>Smoothie</h2>
+            <p>$15.00</p>
+            <button onclick="addToCart('Smoothie', 15)">Add to Cart</button>
+        </div>
+        <img src="logo.png" class="logo">
+    </div>
+
+    <div class="receipt">
+        <h2>Receipt</h2>
+       
+        <div id="receipt-items"></div>
+        <div class="totalPrice">Total:</div>
+        <button class="checkout-btn" onclick="checkout()">Checkout</button>
+    </div>
+    
+</div>
+
+<script>
+    let cartCount = 0;
+
+    function addToCart(productName, price) {
+        cartCount++;
+        document.getElementById('cart-count').innerText = cartCount;
+
+        const receiptItems = document.getElementById('receipt-items');
+        const item = document.createElement('div');
+        item.classList.add('receipt-item');
+        item.innerHTML = `
+            <span>${productName}</span>
+            <span>$${price.toFixed(2)}</span>
+            <button class="cancel-btn" onclick="removeFromCart(this)">Cancel</button>
+        `;
+        receiptItems.appendChild(item);
+    }
+
+    function removeFromCart(button) {
+        const item = button.parentNode;
+        item.parentNode.removeChild(item);
+        cartCount--;
+        document.getElementById('cart-count').innerText = cartCount;
+    }
+
+    function checkout() {
+        var receiptItems = document.querySelectorAll('.receipt-item')
+        var totalPrice = 0; 
+        receiptItems.forEach(function(item) {
+            var price = parseFloat(item.querySelector('span:nth-child(2)').innerText.replace('$', ''))
+           
+            totalPrice += price;
+        });
+        alert('Total price: $' + totalPrice.toFixed(2));
+        alert('Successfully Ordered!');
+        location.reload();
+        
+    }
+</script>
+<script src="logout.js"></script>
+</body>
+</html>
